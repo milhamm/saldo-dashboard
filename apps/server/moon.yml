@@ -9,7 +9,7 @@ stack: backend
 tags: ["app"]
 
 # Overrides the name (identifier) of the project
-id: "api"
+id: "server"
 
 project:
   name: "saldo-server"

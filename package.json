@@ -1,0 +1,14 @@
+{
+  "name": "saldo",
+  "private": true,
+  "scripts": {
+    "build": "moon :build",
+    "dev": "moon :dev",
+    "dev:server": "moon server:dev",
+    "dev:client": "moon client:dev"
+  },
+  "dependencies": {
+    "@moonrepo/cli": "^1.30.6"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
