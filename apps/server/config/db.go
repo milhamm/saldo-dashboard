@@ -8,7 +8,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func InitDB(connString string) *pgxpool.Pool {
+func InitDB() *pgxpool.Pool {
+	connString := os.Getenv("DATABASE_URL")
 	pool, err := pgxpool.New(context.Background(), connString)
 
 	if err != nil {
