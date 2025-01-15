@@ -1,0 +1,3 @@
+ALTER TABLE users
+ADD password VARCHAR(97) NOT NULL DEFAULT '';
+

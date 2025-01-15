@@ -2,12 +2,19 @@ package service
 
 import (
 	"context"
+	"errors"
+	"net/http"
 	"os"
+	"saldo-server/common/password"
 	"saldo-server/domain"
 	"saldo-server/repository"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+)
+
+var (
+	ErrUnauthorized = errors.New("invalid phone or password")
 )
 
 type AuthService struct {
@@ -22,9 +29,17 @@ func NewAuthService(userRepository *repository.UserRepository) *AuthService {
 
 func (a *AuthService) Login(ctx context.Context, u *domain.LoginRequest) (string, error) {
 	user, err := a.UserRepository.GetByPhone(ctx, u.Phone)
+	if err != nil {
+		return "", domain.NewGenericError(http.StatusUnauthorized, "Unauthorized", ErrUnauthorized)
+	}
 
+	match, err := password.ComparePasswordAndHash(u.Password, user.Password)
 	if err != nil {
 		return "", err
+	}
+
+	if !match {
+		return "", domain.NewGenericError(http.StatusUnauthorized, "Unauthorized", ErrUnauthorized)
 	}
 
 	claims := &domain.JWTClaims{
