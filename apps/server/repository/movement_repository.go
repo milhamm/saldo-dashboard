@@ -52,7 +52,7 @@ func (m *MovementRepository) ListByUserID(ctx context.Context, userID string) ([
         FROM
             movements m
         LEFT JOIN accounts a ON a.id = m.account_id
-        WHERE a.user_id = $1
+        WHERE a.user_id = $1 ORDER BY m.created_at DESC
     `
 	rows, err := m.Pool.Query(ctx, query, userID)
 	if err != nil {

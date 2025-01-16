@@ -33,6 +33,9 @@ func main() {
 	movementRepository := repository.NewMovementRepository(pool)
 	movementService := service.NewMovementService(movementRepository, userRepository)
 
+	accountRepository := repository.NewAccountRepository(pool)
+	accountService := service.NewAccountService(accountRepository)
+
 	authService := service.NewAuthService(userRepository)
 
 	e := echo.New()
@@ -49,6 +52,9 @@ func main() {
 
 	movementRouteGroup := privateApiGroup.Group("/movements")
 	handler.NewMovementHandler(movementRouteGroup, movementService)
+
+	accountRouteGroup := privateApiGroup.Group("/accounts")
+	handler.NewAccountHandler(accountRouteGroup, accountService)
 
 	authRouteGroup := publicApiGroup.Group("/auth")
 	handler.NewAuthHandler(authRouteGroup, authService)
