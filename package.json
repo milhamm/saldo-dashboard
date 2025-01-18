@@ -1,14 +1,20 @@
 {
-  "name": "saldo",
-  "private": true,
-  "scripts": {
-    "build": "moon :build",
-    "dev": "moon :dev",
-    "dev:server": "moon server:dev",
-    "dev:client": "moon client:dev"
-  },
-  "dependencies": {
-    "@moonrepo/cli": "^1.30.6"
-  },
-  "packageManager": "pnpm@9.15.0"
+    "name": "saldo",
+    "private": true,
+    "scripts": {
+        "build": "moon :build",
+        "dev": "moon :dev",
+        "dev:server": "moon server:dev",
+        "dev:client": "moon client:dev",
+        "lint": "biome lint . --write",
+        "check": "biome check . --write",
+        "format": "biome format . --write"
+    },
+    "dependencies": {
+        "@moonrepo/cli": "^1.30.6"
+    },
+    "packageManager": "pnpm@9.12.2",
+    "devDependencies": {
+        "@biomejs/biome": "^1.9.4"
+    }
 }

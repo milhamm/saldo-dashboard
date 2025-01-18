@@ -9,7 +9,7 @@ stack: frontend
 tags: ["app"]
 
 # Overrides the name (identifier) of the project
-id: "app"
+id: "client"
 
 project:
   name: "saldo-client"
@@ -18,9 +18,11 @@ project:
 tasks:
   dev:
     command: "pnpm dev"
+    deps: ["shared-ui:build"]
     inputs:
       - "@group(js-configs)"
       - "@group(js-sources)"
       - "@group(assets)"
   build:
     command: "pnpm build"
+    deps: ["shared-ui:build"]

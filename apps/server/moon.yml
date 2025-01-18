@@ -23,7 +23,7 @@ tasks:
       envFile: "/.env"
   kill-port:
     # This is a hack for killing the port 8080 before starting the app
-    command: "pnpm dlx crossplatform-killport 8080"
+    command: "pnpm dlx crossplatform-killport 5000"
     deps: [tidy]
   build:
     command: "go build -o build/saldo-server"
