@@ -1,8 +1,17 @@
 import { redirect } from 'react-router'
-import { commitSession, sessionStorage } from './session.server'
+import { commitSession, destroySession, sessionStorage } from './session.server'
 
 export async function getUserSession(req: Request) {
   return await sessionStorage.getSession(req.headers.get('Cookie'))
+}
+
+export async function destroyUserSession(req: Request) {
+  const session = await getUserSession(req)
+  return redirect('/login', {
+    headers: {
+      'Set-Cookie': await destroySession(session),
+    },
+  })
 }
 
 export async function createUserSession(req: Request, token: string) {

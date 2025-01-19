@@ -23,10 +23,10 @@ import { useForm } from 'react-hook-form'
 import { redirect, useFetcher } from 'react-router'
 import { ApiClient } from '~/services/api'
 import { createUserSession, getUserSession } from '~/services/auth.server'
-import type { Route } from './+types/page'
+import type { Route } from '../+types/page'
 
-import { loginRequestSchema } from './schema'
-import { AuthService } from './service'
+import { loginRequestSchema } from '../schema'
+import { AuthService } from '../service'
 
 export function meta() {
   return [{ title: 'Login' }, { name: 'description', content: 'Saldo Dashboard - Login' }]

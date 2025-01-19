@@ -12,4 +12,4 @@ export const sessionStorage = createCookieSessionStorage({
   },
 })
 
-export const { commitSession, getSession } = sessionStorage
+export const { commitSession, destroySession, getSession } = sessionStorage
