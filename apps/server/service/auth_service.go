@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	ErrUnauthorized = errors.New("invalid phone or password")
+	ErrUnauthorized = errors.New("nomor HP atau kata sandi salah")
 )
 
 type AuthService struct {
