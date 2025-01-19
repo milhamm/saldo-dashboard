@@ -1,7 +1,11 @@
 import { createCookieSessionStorage } from 'react-router'
 import { getServerEnv } from '~/config'
 
-export const sessionStorage = createCookieSessionStorage({
+type SessionData = {
+  access_token: string
+}
+
+export const sessionStorage = createCookieSessionStorage<SessionData>({
   cookie: {
     name: '__session',
     sameSite: 'lax',

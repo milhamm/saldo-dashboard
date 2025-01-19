@@ -1,7 +1,8 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { useState } from 'react'
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router'
 
-import { ofetch } from 'ofetch'
-import { useState } from 'react'
 import type { Route } from './+types/root'
 import stylesheet from './app.css?url'
 import { ApiClient, ApiClientProvider } from './services/api'
@@ -39,12 +40,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const [apiClient] = useState(() => new ApiClient(ofetch))
+  const [apiClient] = useState(() => new ApiClient())
+  const [queryClient] = useState(() => new QueryClient())
 
   return (
-    <ApiClientProvider client={apiClient}>
-      <Outlet />
-    </ApiClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <ApiClientProvider client={apiClient}>
+        <Outlet />
+        <ReactQueryDevtools initialIsOpen={false} position="right" />
+      </ApiClientProvider>
+    </QueryClientProvider>
   )
 }
 

@@ -18,18 +18,20 @@ import {
   Input,
 } from '@saldo-dashboard/shared-ui'
 import { AlertCircle } from 'lucide-react'
-import { ofetch } from 'ofetch'
 import { useForm } from 'react-hook-form'
 import { redirect, useFetcher } from 'react-router'
-import { ApiClient } from '~/services/api'
-import { createUserSession, getUserSession } from '~/services/auth.server'
-import type { Route } from '../+types/page'
+
+import { getUserSession } from '~/services/auth.server'
+import type { Route } from './+types/page'
 
 import { loginRequestSchema } from '../schema'
-import { AuthService } from '../service'
+import { loginAction } from './action'
 
 export function meta() {
-  return [{ title: 'Login' }, { name: 'description', content: 'Saldo Dashboard - Login' }]
+  return [
+    { title: 'Masuk/Login - Saldo Dashboard' },
+    { name: 'description', content: 'Saldo Dashboard - Login' },
+  ]
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -39,34 +41,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   }
 }
 
-export async function action({ request }: Route.ActionArgs) {
-  const formData = await request.formData()
-  let response: Response
-
-  const apiClient = new ApiClient(ofetch)
-  const authService = new AuthService(apiClient)
-
-  const data = loginRequestSchema.safeParse(Object.fromEntries(formData.entries()))
-
-  if (data.error) {
-    return { error: data.error.message }
-  }
-
-  try {
-    const token = await authService.login(data.data)
-    response = await createUserSession(request, token)
-    if (!response) {
-      throw new Error('An error occurred while creating the session')
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      return { error: error.message }
-    }
-
-    return { error: 'Unknown Error' }
-  }
-  return response
-}
+export const action = loginAction
 
 export default function Login(_: Route.ComponentProps) {
   const fetcher = useFetcher<typeof action>()
@@ -102,7 +77,7 @@ export default function Login(_: Route.ComponentProps) {
                             <FormControl>
                               <Input placeholder="Masukkan Nomor HP" {...field} />
                             </FormControl>
-                            <FormDescription>e.g: 08123456789</FormDescription>
+                            <FormDescription>Contoh: 08123456789</FormDescription>
                             <FormMessage />
                           </FormItem>
                         )}

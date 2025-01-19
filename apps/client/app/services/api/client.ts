@@ -1,5 +1,5 @@
 import { type ConsolaInstance, createConsola } from 'consola'
-import { type $Fetch, FetchError, type FetchRequest } from 'ofetch'
+import { type $Fetch, FetchError, type FetchRequest, ofetch } from 'ofetch'
 import { getClientEnv } from '~/config'
 import type { GenericError } from '~/types'
 
@@ -15,7 +15,7 @@ export class ApiClient {
   #fetcher: $Fetch
   #logger: ConsolaInstance
 
-  constructor(client: $Fetch) {
+  constructor() {
     this.#options = ApiClient.getDefaultOptions()
     this.#logger = createConsola({
       level: 4,
@@ -23,7 +23,7 @@ export class ApiClient {
         tag: 'ApiClient',
       },
     })
-    this.#fetcher = this.#createFetcher(client)
+    this.#fetcher = this.#createFetcher(ofetch)
   }
 
   setOptions(opts: ApiClientOptions) {
