@@ -5,6 +5,14 @@ export async function getUserSession(req: Request) {
   return await sessionStorage.getSession(req.headers.get('Cookie'))
 }
 
+export async function getAndValidateUserSession(req: Request) {
+  const session = await getUserSession(req)
+  if (!session.has('access_token')) {
+    throw redirect('/login')
+  }
+  return session.get('access_token') as string
+}
+
 export async function destroyUserSession(req: Request) {
   const session = await getUserSession(req)
   return redirect('/login', {

@@ -41,6 +41,7 @@ func main() {
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.Logger())
+	e.Use(middleware.CORS())
 
 	authMiddlerware := echojwt.WithConfig(config.InitJWT())
 

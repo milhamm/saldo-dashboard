@@ -5,5 +5,5 @@ export default [
     route('login', 'features/auth/login/page.tsx'),
     route('logout', 'features/auth/logout/page.tsx'),
   ]),
-  layout('features/dashboard/layout.tsx', [index('features/dashboard/home/page.tsx')]),
+  layout('features/dashboard/layout.tsx', [index('features/dashboard/movement/page.tsx')]),
 ] satisfies RouteConfig

@@ -1,11 +1,26 @@
-import { Button } from '@saldo-dashboard/shared-ui'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@saldo-dashboard/shared-ui'
 import { Form } from 'react-router'
-import { useAuth } from '~/features/auth/provider'
+import { useAccessToken } from '~/features/auth'
+
+import { useState } from 'react'
+import { useMovements } from '../hooks/use-movement'
 import logoDark from './logo-dark.svg'
 import logoLight from './logo-light.svg'
 
-export function Welcome() {
-  const token = useAuth()
+export function Movements() {
+  const token = useAccessToken()
+  const { data } = useMovements(token)
+  const [formatter] = useState(
+    () => new Intl.NumberFormat('id-ID', { currency: 'IDR', style: 'currency' })
+  )
+
   return (
     <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex min-h-0 flex-1 flex-col items-center gap-16">
@@ -21,6 +36,22 @@ export function Welcome() {
             <img src={logoDark} alt="React Router" className="hidden w-full dark:block" />
           </div>
         </header>
+        <div className="space-y-4 px-4">
+          {data?.map((movement) => (
+            <Card key={movement.id}>
+              <CardHeader>
+                <CardTitle className="capitalize">{movement.movement_type}</CardTitle>
+                <CardDescription>{movement.id}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <pre>{formatter.format(movement.amount)}</pre>
+                <pre>{formatter.format(movement.fee)}</pre>
+                <pre>{new Date(movement.created_at).toDateString()}</pre>
+                <pre>{new Date(movement.updated_at).toDateString()}</pre>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
         <div className="w-full max-w-[300px] space-y-6 px-4">
           <nav className="space-y-4 rounded-3xl border border-gray-200 p-6 dark:border-gray-700">
             <p className="text-center text-gray-700 leading-6 dark:text-gray-200">
